@@ -16,6 +16,7 @@ exports.getJobs = catchAsyncErrors(async (req, res, next) => {
     },
   });
 });
+
 //create job in database /api/v1/jobs
 exports.createJob = catchAsyncErrors(async (req, res, next) => {
   const job = await Job.create(req.body);
@@ -83,10 +84,7 @@ exports.deleteJob = catchAsyncErrors(async (req, res, next) => {
   const job = await Job.findById(req.params.id);
 
   if (!job) {
-    return res.status(400).json({
-      message: "Job not found",
-      success: false,
-    });
+    return next(new ErrorHandler("Job not Found", 404));
   }
 
   const deletedJob = await Job.findByIdAndDelete(req.params.id);
@@ -103,10 +101,7 @@ exports.getJob = catchAsyncErrors(async (req, res, next) => {
   });
 
   if (!job || job.length === 0) {
-    return res.status(400).json({
-      message: "Job not found",
-      success: false,
-    });
+    return next(new ErrorHandler("Job not found", 404));
   }
 
   res.status(200).json({
