@@ -7,7 +7,7 @@ class APIFilters {
     const queryCopy = { ...this.queryStr };
 
     //removing fields from the query
-    const removeFields = ["sort","fields"];
+    const removeFields = ["sort", "fields", "keyword"];
     removeFields.forEach((el) => delete queryCopy[el]);
 
     console.log(queryCopy);
@@ -26,21 +26,28 @@ class APIFilters {
 
   sort() {
     if (this.queryStr.sort) {
-      const sortBy = this.queryStr.sort.split(",").join(" ")
+      const sortBy = this.queryStr.sort.split(",").join(" ");
       this.query = this.query.sort(sortBy);
-    }else {
-      this.query = this.query.sort("-postingDate")
+    } else {
+      this.query = this.query.sort("-postingDate");
     }
     return this;
   }
   limitFields() {
     if (this.queryStr.fields) {
-const fields = this.queryStr.fields.split(",").join(" ");
-this.query = this.query.select(fields)
-  }else{
-    this.query = this.query.select("-__v")
+      const fields = this.queryStr.fields.split(",").join(" ");
+      this.query = this.query.select(fields);
+    } else {
+      this.query = this.query.select("-__v");
+    }
+    return this;
   }
-  return this;
-}
+  searchByQuery() {
+    if (this.queryStr.keyword) {
+      const qu = this.queryStr.keyword.split("-").join(" ");
+      this.query = this.query.find({ $text: { $search: "\"" + qu + "\"" } });
+    }
+    return this;
+  }
 }
 module.exports = APIFilters;
