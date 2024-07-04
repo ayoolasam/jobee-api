@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require("dotenv");
 const errorMiddleWare = require("./middlewares/errors");
 const ErrorHandler = require("./utils/errorHandler");
+const cookieParser = require("cookie-parser")
 
 //setting up config.env file variation
 dotenv.config({ path: "./config/config.env" });
@@ -10,6 +11,7 @@ dotenv.config({ path: "./config/config.env" });
 const databaseConnection = require("./config/database");
 
 app.use(express.json());
+app.use(cookieParser())
 
 //handling uncaught exceptions
 process.on("uncaughtExceptions", (err) => {
@@ -22,8 +24,10 @@ databaseConnection();
 
 //Importing routes
 const job = require("./routes/jobs");
+const user = require("./routes/users")
 
 app.use("/api/v1", job);
+app.use("/api/v1", user);
 
 //Handle unhandled routes
 app.all("*", (req, res, next) => {

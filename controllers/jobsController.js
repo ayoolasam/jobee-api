@@ -6,7 +6,12 @@ const APIFilters = require("../utils/apiFilters");
 
 //getjobs in database /api/v1/jobs
 exports.getJobs = catchAsyncErrors(async (req, res, next) => {
-  const apiFilters = new APIFilters(Job.find(), req.query).filter().sort().limitFields().searchByQuery();
+  const apiFilters = new APIFilters(Job.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .searchByQuery()
+    .pagination();
 
   const jobs = await apiFilters.query;
 
@@ -22,6 +27,10 @@ exports.getJobs = catchAsyncErrors(async (req, res, next) => {
 
 //create job in database /api/v1/jobs
 exports.createJob = catchAsyncErrors(async (req, res, next) => {
+
+//add user in database
+  req.body.user = req.user.id;
+
   const job = await Job.create(req.body);
   res.status(201).json({
     message: "job Created",

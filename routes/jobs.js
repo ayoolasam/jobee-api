@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { isAuthenticatedUser, authorizeRoles } = require("../middlewares/auth");
 
 //importing jobs controller methods
 const {
@@ -14,10 +15,15 @@ const {
 
 router.get("/jobs", getJobs);
 
-router.post("/job/new", createJob);
+router.post(
+  "/job/new",
+  isAuthenticatedUser,
+  authorizeRoles("admin", "employer"),
+  createJob
+);
 router.get("/jobs/:zipcode/:distance", getJobsInRadius);
-router.put("/job/:id", updateJob);
-router.delete("/job/:id", deleteJob);
+router.put("/job/:id", isAuthenticatedUser,authorizeRoles("admin", "employer"), updateJob);
+router.delete("/job/:id", isAuthenticatedUser,authorizeRoles("admin", "employer"), deleteJob);
 router.get("/job/:id/:slug", getJob);
 router.get("/stats/:topic", jobStats);
 

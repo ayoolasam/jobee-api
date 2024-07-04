@@ -15,7 +15,11 @@ module.exports = (err, req, res, next) => {
     let error = { ...err };
 
     error.message = err.message;
-
+    //handling mongoose duplicate error
+    if (err.code === 11000) {
+      const message = `Duplicate ${object.keys(err.keyValue)} entered.`;
+      error = new ErrorHandler(message, 400);
+    }
     //wrong mongoose object ID error
 
     if (err.name === "CastError") {

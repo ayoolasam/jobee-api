@@ -17,7 +17,7 @@ const jobSchema = new mongoose.Schema(
       required: [true, "Please enter Job description"],
       maxlength: [1000, "job description cannot exceed 1000 characters"],
     },
-    emaail: {
+    email: {
       type: String,
       validate: [validator.isEmail, "please add a valid email address."],
     },
@@ -47,7 +47,7 @@ const jobSchema = new mongoose.Schema(
     },
     industry: {
       type: [String],
-      required: [true,"Please Enter industry for this job"],
+      required: [true, "Please Enter industry for this job"],
       enum: {
         values: [
           "Business",
@@ -62,7 +62,7 @@ const jobSchema = new mongoose.Schema(
     },
     jobType: {
       type: String,
-      required: [true,"Please enter job type"],
+      required: [true, "Please enter job type"],
       enum: {
         values: ["Permanent", "Temporary", "Internship"],
         message: "Please select a correct job type option",
@@ -70,7 +70,7 @@ const jobSchema = new mongoose.Schema(
     },
     minEducation: {
       type: String,
-      required: [true,"please enter minimum Education"],
+      required: [true, "please enter minimum Education"],
       enum: {
         values: ["Bachelors", "Masters", "PhD"],
         message: "Please select correct options for education",
@@ -82,7 +82,7 @@ const jobSchema = new mongoose.Schema(
     },
     experience: {
       type: String,
-      required: [true,"Please enter required experience for this job"],
+      required: [true, "Please enter required experience for this job"],
       enum: {
         values: [
           "No Experience",
@@ -108,6 +108,11 @@ const jobSchema = new mongoose.Schema(
     applicantsApplied: {
       type: [Object],
       select: false,
+    },
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref:"User",
+      required: [true, "Please enter user id for this job"],
     },
   },
   {

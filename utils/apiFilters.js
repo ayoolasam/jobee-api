@@ -7,7 +7,7 @@ class APIFilters {
     const queryCopy = { ...this.queryStr };
 
     //removing fields from the query
-    const removeFields = ["sort", "fields", "keyword"];
+    const removeFields = ["sort", "fields", "keyword","limit","page"];
     removeFields.forEach((el) => delete queryCopy[el]);
 
     console.log(queryCopy);
@@ -45,8 +45,15 @@ class APIFilters {
   searchByQuery() {
     if (this.queryStr.keyword) {
       const qu = this.queryStr.keyword.split("-").join(" ");
-      this.query = this.query.find({ $text: { $search: "\"" + qu + "\"" } });
+      this.query = this.query.find({ $text: { $search: '"' + qu + '"' } });
     }
+    return this;
+  }
+  pagination() {
+    const page = parseInt(this.queryStr.page, 10) || 1;
+    const limit = parseInt(this.queryStr.limit, 10) || 4;
+    const skipResults = (page - 1) * limit;
+    this.query = this.query.skip(skipResults).limit(limit);
     return this;
   }
 }
