@@ -11,7 +11,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xssClean = require("xss-clean");
 const hpp = require("hpp");
 const cors = require("cors")
-const bodyParser = require()
+
 
 //setting up config.env file variation
 dotenv.config({ path: "./config/config.env" });
