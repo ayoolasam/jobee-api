@@ -11,6 +11,7 @@ const {
   deleteJob,
   getJob,
   jobStats,
+  fileUpload
 } = require("../controllers/jobsController");
 
 router.get("/jobs", getJobs);
@@ -26,5 +27,6 @@ router.put("/job/:id", isAuthenticatedUser,authorizeRoles("admin", "employer"), 
 router.delete("/job/:id", isAuthenticatedUser,authorizeRoles("admin", "employer"), deleteJob);
 router.get("/job/:id/:slug", getJob);
 router.get("/stats/:topic", jobStats);
+router.put("/job/:id/apply", isAuthenticatedUser,authorizeRoles("user"), fileUpload);
 
 module.exports = router;

@@ -36,13 +36,18 @@ const userSchema = new mongoose.Schema({
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
-});
+},
+{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
+}
+);
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
   }
-  this.password = await bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password,10);
 });
 
 //Return jsonwebtoken
@@ -70,6 +75,12 @@ userSchema.methods.getResetPasswordToken = function () {
 
   return resetToken;
 };
-
+//show all jobs created by using virtuals
+userSchema.virtual('jobsPublished',{
+  ref:"Job",
+  localField:"_id",
+  foreignField:"user",
+  justOne:false
+  })
 const User = mongoose.model("User", userSchema);
 module.exports = User;

@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const errorMiddleWare = require("./middlewares/errors");
+const fileUpload = require("express-fileupload")
 const ErrorHandler = require("./utils/errorHandler");
 const cookieParser = require("cookie-parser")
 
@@ -17,10 +18,13 @@ app.use(cookieParser())
 process.on("uncaughtExceptions", (err) => {
   console.log(`Error:${err.message}`);
   console.log("Shutting downthe server  due to uncuaght exceptions ");
-  procces.exit(1);
+  process.exit(1);
 });
 
 databaseConnection();
+
+//handle file upload
+app.use(fileUpload());
 
 //Importing routes
 const job = require("./routes/jobs");

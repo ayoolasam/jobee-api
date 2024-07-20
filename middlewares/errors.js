@@ -31,6 +31,18 @@ module.exports = (err, req, res, next) => {
       const message = Object.values(err.errors).map((value) => value.message);
       error = new ErrorHandler(message, 404);
     }
+    //handling wromg jwt token error
+if(err.name === "JsonWebTokenError"){
+const message = "JSON web token invalid. Try again"
+error = new ErrorHandler(message,500)
+}
+
+//handling expired jwt token error
+if(err.name === "TokenExpiredError"){
+  const message = "JSON web token expired. Try again"
+  error = new ErrorHandler(message,500)
+}
+
     res.status(error.statusCode).json({
       success: false,
       message: error.message || "internal server Error.",
