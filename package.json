@@ -4,25 +4,31 @@
   "description": "this api is about jobs",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app",
-    "prod": "SET NODE_ENV=production&nodemon app.js"
+    "start": "SET NODE_ENV=production&node app.js",
+
   },
   "author": "ayoola samuel",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-fileupload": "^1.5.0",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.3.1",
+    "helmet": "^7.1.0",
+    "hpp": "^0.2.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.3",
     "node-geocoder": "^4.3.0",
     "nodemailer": "^6.9.14",
     "slugify": "^1.6.6",
-    "validator": "^13.12.0"
+    "validator": "^13.12.0",
+    "xss": "^1.0.15",
+    "xss-clean": "^0.1.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
