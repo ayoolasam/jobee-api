@@ -21,6 +21,7 @@ const databaseConnection = require("./config/database");
 app.use(express.json());
 app.use(cookieParser());
 
+app.set('trust proxy', 1);
 //handling uncaught exceptions
 process.on("uncaughtExceptions", (err) => {
   console.log(`Error:${err.message}`);
@@ -48,6 +49,7 @@ app.use(xssClean());
 
 //setup cors
 app.use(cors());
+
 
 //rate Limit
 const limiter = rateLimit({
