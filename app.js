@@ -39,6 +39,11 @@ app.use(fileUpload());
 
 //prevent parameter pollution
 
+app.use(cors({
+  origin: 'http://localhost:5173', // Replace with your frontend's actual domain
+  credentials: true, // This allows cookies to be sent and received
+}));
+
 app.use(hpp());
 
 //sanitize data
