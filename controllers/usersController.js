@@ -115,6 +115,8 @@ exports.logoutUser = catchAsyncErrors(async (req, res, next) => {
   res.cookie("token", "none", {
     expires: new Date(Date.now()),
     httpOnly: true,
+    sameSite: "None",
+    secure: true,
   });
   res.status(200).json({
     success: true,
@@ -220,7 +222,7 @@ async function deleteUserData(user, role) {
         appliedJobs[i].applicantsApplied.indexOf(obj.id)
       );
 
-     await appliedJobs[i].save();
+      await appliedJobs[i].save();
     }
   }
 }

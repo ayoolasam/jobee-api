@@ -13,6 +13,7 @@ const sendToken = (user, statusCode, res, req) => {
   sameSite: 'None',
   };
 
+
     
 
   res.status(statusCode).cookie("token", token, options).json({
