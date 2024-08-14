@@ -10,8 +10,7 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 const xssClean = require("xss-clean");
 const hpp = require("hpp");
-const cors = require("cors")
-
+const cors = require("cors");
 
 //setting up config.env file variation
 dotenv.config({ path: "./config/config.env" });
@@ -21,7 +20,7 @@ const databaseConnection = require("./config/database");
 app.use(express.json());
 app.use(cookieParser());
 
-app.set('trust proxy', 1);
+app.set("trust proxy", 1);
 //handling uncaught exceptions
 process.on("uncaughtExceptions", (err) => {
   console.log(`Error:${err.message}`);
@@ -39,10 +38,12 @@ app.use(fileUpload());
 
 //prevent parameter pollution
 
-app.use(cors({
-  origin: 'http://localhost:5173', // Replace with your frontend's actual domain
-  credentials: true, // This allows cookies to be sent and received
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173", // Replace with your frontend's actual domain
+    credentials: true, // This allows cookies to be sent and received
+  })
+);
 
 app.use(hpp());
 
@@ -53,8 +54,7 @@ app.use(mongoSanitize());
 app.use(xssClean());
 
 //setup cors
-app.use(cors());
-
+// app.use(cors());
 
 //rate Limit
 const limiter = rateLimit({
