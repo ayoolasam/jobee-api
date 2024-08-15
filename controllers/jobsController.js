@@ -132,12 +132,13 @@ exports.deleteJob = catchAsyncErrors(async (req, res, next) => {
 
 //get a specific job by id /api/v1/job/:id
 exports.getJob = catchAsyncErrors(async (req, res, next) => {
-  const job = await Job.find({
-    $and: [{ _id: req.params.id }, { slug: req.params.slug }],
-  }).populate({
-    path: "user",
-    select: "name",
-  });
+  // const job = await Job.find({
+  //   $and: [{ _id: req.params.id }, { slug: req.params.slug }],
+  // }).populate({
+  //   path: "user",
+  //   select: "name",
+  // });
+  const job = await Job.findById(req.params.id);
 
   if (!job || job.length === 0) {
     return next(new ErrorHandler("Job not found", 404));
