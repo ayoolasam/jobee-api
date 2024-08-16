@@ -69,6 +69,8 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
       sucess: true,
       message: `email sent to ${user.email} successfully`,
+
+      resetUrls: resetUrl,
     });
   } catch (error) {
     user.resetPasswordToken = undefined;
