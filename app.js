@@ -40,7 +40,7 @@ app.use(fileUpload());
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // Replace with your frontend's actual domain
+    origin: ["http://localhost:5173", "https://jobs-with-vuejs.vercel.app"], // Replace with your frontend's actual domain
     credentials: true, // This allows cookies to be sent and received
   })
 );
